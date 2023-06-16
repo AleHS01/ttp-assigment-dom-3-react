@@ -14,6 +14,7 @@ class AppComponent extends Component {
     this.addColumn = this.addColumn.bind(this);
     this.cellClick = this.cellClick.bind(this);
     this.colorUncolorCells = this.colorUncolorCells.bind(this);
+    this.colorAllCells = this.colorAllCells.bind(this);
   }
 
   addRow = () => {
@@ -64,6 +65,23 @@ class AppComponent extends Component {
     this.setState({ table: updatedTable });
   };
 
+  colorAllCells() {
+    const table = this.state.table;
+    const color = this.state.cellColor;
+
+    const updatedTable = table.map(function (row) {
+      const updatedRow = row.map(function () {
+        return color;
+      });
+
+      return updatedRow;
+    });
+
+    this.setState({
+      table: updatedTable
+    });
+  }
+
   render() {
     return (
       <div className="button-container">
@@ -85,6 +103,7 @@ class AppComponent extends Component {
           <option value="yellow">Yellow</option>
         </select>
         <button onClick={this.colorUncolorCells}>Color Uncolored Cells</button>
+        <button onClick={this.colorAllCells}>Color All Cells</button>
         <Table table={this.state.table} cellClick={this.cellClick} />
       </div>
     );
