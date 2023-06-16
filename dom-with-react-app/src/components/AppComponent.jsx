@@ -15,6 +15,7 @@ class AppComponent extends Component {
     this.cellClick = this.cellClick.bind(this);
     this.colorUncolorCells = this.colorUncolorCells.bind(this);
     this.colorAllCells = this.colorAllCells.bind(this);
+    this.clearAllCells = this.clearAllCells.bind(this);
   }
 
   addRow = () => {
@@ -82,6 +83,21 @@ class AppComponent extends Component {
     });
   }
 
+  clearAllCells() {
+    const table = this.state.table;
+    const color = "transparent";
+    const updatedTable = table.map((row) =>
+      row.map((cell) => {
+        if (cell !== "transparent")
+          return color;
+        return cell;
+      })
+    );
+    this.setState({
+      table: updatedTable
+    });
+  }
+
   render() {
     return (
       <div className="button-container">
@@ -104,6 +120,7 @@ class AppComponent extends Component {
         </select>
         <button onClick={this.colorUncolorCells}>Color Uncolored Cells</button>
         <button onClick={this.colorAllCells}>Color All Cells</button>
+        <button onClick={this.clearAllCells}>Clear All Cells</button>
         <Table table={this.state.table} cellClick={this.cellClick} />
       </div>
     );
