@@ -56,7 +56,7 @@ class AppComponent extends Component {
 
     const updatedTable = table.map((row) =>
     row.map((cell) => {
-      if (cell === "")
+      if (cell == "" || cell === "transparent")
         return color;
       return cell;
     })
