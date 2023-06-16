@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TableCell } from "./TableCell";
+import TableCell from "./TableCell";
 
 class TableRow extends Component {
   constructor(props) {
@@ -26,3 +26,5 @@ class TableRow extends Component {
     );
   }
 }
+
+export default TableRow;

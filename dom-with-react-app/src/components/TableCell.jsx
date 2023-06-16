@@ -21,3 +21,5 @@ class TableCell extends Component {
     );
   }
 }
+
+export default TableCell;
