@@ -7,16 +7,15 @@ class TableCell extends Component {
     this.cellColor = props.cellColor;
     this.rowNumber = props.rowNumber;
     this.columnNumber = props.columnNumber;
-    this.cellClick = props.columnNumber;
-    this.id = props.key;
+    this.cellClick = props.cellClick;
   }
 
   render() {
     return (
       <td
+        className="table-cell"
         style={{ backgroundColor: this.cellColor }}
-        onClick={this.cellClick(this.rowNumber, this.columnNumber)}
-        id={this.id}
+        onClick={() => this.cellClick(this.rowNumber, this.columnNumber)}
       ></td>
     );
   }
