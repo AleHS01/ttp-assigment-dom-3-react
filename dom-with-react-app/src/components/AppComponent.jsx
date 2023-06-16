@@ -11,8 +11,9 @@ class AppComponent extends Component {
 
     this.addRow = this.addRow.bind(this);
     this.selectColor = this.selectColor.bind(this);
-    this.cellClick = this.cellClick.bind(this);
     this.addColumn = this.addColumn.bind(this);
+    this.cellClick = this.cellClick.bind(this);
+    this.colorUncolorCells = this.colorUncolorCells.bind(this);
   }
 
   addRow = () => {
@@ -38,14 +39,29 @@ class AppComponent extends Component {
     });
   };
 
-  cellClick = (rowNumber, columnNumber) => {
+   cellClick = (rowNumber, columnNumber) => {
+     const cellColor = this.state.cellColor;
     this.setState((prevState) => {
       const updatedTable = [...prevState.table];
-      updatedTable[rowNumber][columnNumber] = prevState.cellColor;
+      updatedTable[rowNumber][columnNumber] = cellColor;
       return {
         table: updatedTable,
       };
     });
+  };
+
+  colorUncolorCells() {
+    const table = this.state.table;
+    const color = this.state.cellColor;
+
+    const updatedTable = table.map((row) =>
+    row.map((cell) => {
+      if (cell === "")
+        return color;
+      return cell;
+    })
+    );
+    this.setState({ table: updatedTable });
   };
 
   render() {
@@ -62,12 +78,13 @@ class AppComponent extends Component {
           onChange={this.selectColor}
           value={this.state.cellColor}
         >
-          <option value="red">Default</option>
+          <option value="transparent">Default</option>
           <option value="red">Red</option>
           <option value="blue">Blue</option>
           <option value="green">Green</option>
           <option value="yellow">Yellow</option>
         </select>
+        <button onClick={this.colorUncolorCells}>Color Uncolored Cells</button>
         <Table table={this.state.table} cellClick={this.cellClick} />
       </div>
     );

@@ -4,18 +4,23 @@ class TableCell extends Component {
   constructor(props) {
     super(props);
 
-    this.cellColor = props.cellColor;
-    this.rowNumber = props.rowNumber;
-    this.columnNumber = props.columnNumber;
-    this.cellClick = props.cellClick;
+    this.cellColor = this.props.cellColor;
+    this.rowNumber = this.props.rowNumber;
+    this.columnNumber = this.props.columnNumber;
+    this.cellClick = this.props.cellClick;
   }
 
   render() {
+    const cellColor = this.props.cellColor;
+    const rowNumber = this.props.rowNumber;
+    const columnNumber = this.props.columnNumber;
+    const cellClick = this.props.cellClick;
+
     return (
       <td
         className="table-cell"
-        style={{ backgroundColor: this.cellColor }}
-        onClick={() => this.cellClick(this.rowNumber, this.columnNumber)}
+        style={{ backgroundColor: cellColor }}
+        onClick={() => cellClick(rowNumber, columnNumber)}
       ></td>
     );
   }
