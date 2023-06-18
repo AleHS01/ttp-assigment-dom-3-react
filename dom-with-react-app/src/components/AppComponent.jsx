@@ -16,6 +16,8 @@ class AppComponent extends Component {
     this.colorUncolorCells = this.colorUncolorCells.bind(this);
     this.colorAllCells = this.colorAllCells.bind(this);
     this.clearAllCells = this.clearAllCells.bind(this);
+    this.removeRow = this.removeRow.bind(this);
+    this.removeColumn = this.removeColumn.bind(this)
   }
 
   addRow = () => {
@@ -58,7 +60,7 @@ class AppComponent extends Component {
 
     const updatedTable = table.map((row) =>
     row.map((cell) => {
-      if (cell == "" || cell === "transparent")
+      if (cell === "" || cell === "transparent")
         return color;
       return cell;
     })
@@ -98,6 +100,34 @@ class AppComponent extends Component {
     });
   }
 
+  removeRow = (rowNumber) => {
+    this.setState((prevState) => {
+      const updatedTable = [...prevState.table];
+      if (updatedTable.length > 1) {
+        //if the length of the row is greater than one then delete
+        updatedTable.splice(rowNumber, 1); // remove 1 row
+      }
+      return {
+        table: updatedTable,
+      };
+    });
+  };
+
+  removeColumn = (columnNumber) => {
+    this.setState((prevState) => {
+      const updatedTable = prevState.table.map((row) => {
+        const updatedRow = [...row]; //row containing an array with cells / columns
+        if (updatedRow.length > 1) {
+          updatedRow.splice(columnNumber, 1);
+        }
+        return updatedRow;
+      });
+      return {
+        table: updatedTable,
+      };
+    });
+  };
+
   render() {
     return (
       <div className="button-container">
@@ -121,6 +151,8 @@ class AppComponent extends Component {
         <button onClick={this.colorUncolorCells}>Color Uncolored Cells</button>
         <button onClick={this.colorAllCells}>Color All Cells</button>
         <button onClick={this.clearAllCells}>Clear All Cells</button>
+        <button onClick={this.removeRow}>Remove Row</button>
+        <button onClick={this.removeColumn}>Remove Column</button>
         <Table table={this.state.table} cellClick={this.cellClick} />
       </div>
     );
