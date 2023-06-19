@@ -37,6 +37,8 @@ class AppComponent extends Component {
     tableElement.removeEventListener("mouseleave", this.handleMouseUp);
   }
 
+  // addRow: This function is used to add a new row to the table.
+  // It creates an empty row (array filled with empty strings) with the same length as the existing rows.
   addRow = () => {
     let columnNumber = this.state.table[0].length;
     let rowToBeAdded = new Array(columnNumber).fill("");
@@ -45,6 +47,8 @@ class AppComponent extends Component {
     }));
   };
 
+  // addColumn: This function is used to add a new column to all existing rows in the table.
+  // It maps over the current state of the table and adds an empty string to the end of each row.
   addColumn = () => {
     this.setState((prevState) => {
       const updatedTable = prevState.table.map((rows) => [...rows, ""]);
@@ -54,12 +58,15 @@ class AppComponent extends Component {
     });
   };
 
+  // selectColor: This function updates the selected cell color in the component's state.
   selectColor = (dropdown) => {
     this.setState({
       cellColor: dropdown.target.value,
     });
   };
 
+  // cellClick: This function updates the color of a specific cell in the table when clicked.
+  // It updates the color based on the currently selected color in the state.
   cellClick = (rowNumber, columnNumber) => {
     const cellColor = this.state.cellColor;
     this.setState((prevState) => {
@@ -73,6 +80,8 @@ class AppComponent extends Component {
     });
   };
 
+  // colorUncolorCells: This function updates the color of all uncolored or white cells in the table.
+  // It updates the color based on the currently selected color in the state.
   colorUncolorCells() {
     const table = this.state.table;
     const color = this.state.cellColor;
@@ -86,6 +95,8 @@ class AppComponent extends Component {
     this.setState({ table: updatedTable });
   }
 
+  // colorAllCells: This function updates the color of all cells in the table.
+  // It updates the color based on the currently selected color in the state.
   colorAllCells() {
     const table = this.state.table;
     const color = this.state.cellColor;
@@ -103,6 +114,8 @@ class AppComponent extends Component {
     });
   }
 
+  // clearAllCells: This function clears all colored cells in the table.
+  // It sets the color of all non-white cells to white.
   clearAllCells() {
     const table = this.state.table;
     const color = "white";
@@ -117,12 +130,12 @@ class AppComponent extends Component {
     });
   }
 
+  // removeRow: This function removes a specific row from the table.
   removeRow = (rowNumber) => {
     this.setState((prevState) => {
       const updatedTable = [...prevState.table];
       if (updatedTable.length > 1) {
-        //if the length of the row is greater than one then delete
-        updatedTable.splice(rowNumber, 1); // remove 1 row
+        updatedTable.splice(rowNumber, 1);
       }
       return {
         table: updatedTable,
@@ -130,10 +143,11 @@ class AppComponent extends Component {
     });
   };
 
+  // removeColumn: This function removes a specific column from all rows in the table.
   removeColumn = (columnNumber) => {
     this.setState((prevState) => {
       const updatedTable = prevState.table.map((row) => {
-        const updatedRow = [...row]; //row containing an array with cells / columns
+        const updatedRow = [...row];
         if (updatedRow.length > 1) {
           updatedRow.splice(columnNumber, 1);
         }
@@ -145,6 +159,8 @@ class AppComponent extends Component {
     });
   };
 
+  // handleMouseDown: This function is called when the mouse button is pressed down.
+  // It's used to start the process of coloring a range of cells via mouse dragging.
   handleMouseDown(rowNumber, columnNumber) {
     this.setState({
       isDragging: true,
@@ -152,6 +168,8 @@ class AppComponent extends Component {
     });
   }
 
+  // handleMouseOver: This function is called when the mouse cursor moves over a cell while the mouse button is pressed down.
+  // It's used to color a range of cells by dragging the mouse.
   handleMouseOver(rowNumber, columnNumber) {
     if (this.state.isDragging) {
       const startCell = this.state.startCell;
@@ -178,6 +196,8 @@ class AppComponent extends Component {
     }
   }
 
+  // handleMouseUp: This function is called when the mouse button is released.
+  // It's used to stop the process of coloring a range of cells via mouse dragging.
   handleMouseUp() {
     this.setState({
       isDragging: false,
