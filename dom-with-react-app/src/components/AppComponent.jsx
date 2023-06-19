@@ -7,6 +7,8 @@ class AppComponent extends Component {
     this.state = {
       table: [[""]],
       cellColor: "transparent",
+      isDragging: false,
+      startCell: null,
     };
 
     this.addRow = this.addRow.bind(this);
@@ -17,7 +19,22 @@ class AppComponent extends Component {
     this.colorAllCells = this.colorAllCells.bind(this);
     this.clearAllCells = this.clearAllCells.bind(this);
     this.removeRow = this.removeRow.bind(this);
-    this.removeColumn = this.removeColumn.bind(this)
+    this.removeColumn = this.removeColumn.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMouseOver = this.handleMouseOver.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
+  }
+
+  componentDidMount() {
+    const tableElement = document.getElementById("table");
+    tableElement.addEventListener("mouseup", this.handleMouseUp);
+    tableElement.addEventListener("mouseleave", this.handleMouseUp);
+  }
+
+  componentWillUnmount() {
+    const tableElement = document.getElementById("table");
+    tableElement.removeEventListener("mouseup", this.handleMouseUp);
+    tableElement.removeEventListener("mouseleave", this.handleMouseUp);
   }
 
   addRow = () => {
@@ -43,13 +60,15 @@ class AppComponent extends Component {
     });
   };
 
-   cellClick = (rowNumber, columnNumber) => {
-     const cellColor = this.state.cellColor;
+  cellClick = (rowNumber, columnNumber) => {
+    const cellColor = this.state.cellColor;
     this.setState((prevState) => {
       const updatedTable = [...prevState.table];
       updatedTable[rowNumber][columnNumber] = cellColor;
       return {
         table: updatedTable,
+        isDragging: true,
+        startCell: [rowNumber, columnNumber],
       };
     });
   };
@@ -59,14 +78,13 @@ class AppComponent extends Component {
     const color = this.state.cellColor;
 
     const updatedTable = table.map((row) =>
-    row.map((cell) => {
-      if (cell === "" || cell === "transparent")
-        return color;
-      return cell;
-    })
+      row.map((cell) => {
+        if (cell === "" || cell === "transparent") return color;
+        return cell;
+      })
     );
     this.setState({ table: updatedTable });
-  };
+  }
 
   colorAllCells() {
     const table = this.state.table;
@@ -81,7 +99,7 @@ class AppComponent extends Component {
     });
 
     this.setState({
-      table: updatedTable
+      table: updatedTable,
     });
   }
 
@@ -90,13 +108,12 @@ class AppComponent extends Component {
     const color = "transparent";
     const updatedTable = table.map((row) =>
       row.map((cell) => {
-        if (cell !== "transparent")
-          return color;
+        if (cell !== "transparent") return color;
         return cell;
       })
     );
     this.setState({
-      table: updatedTable
+      table: updatedTable,
     });
   }
 
@@ -128,32 +145,83 @@ class AppComponent extends Component {
     });
   };
 
+  handleMouseDown(rowNumber, columnNumber) {
+    this.setState({
+      isDragging: true,
+      startCell: [rowNumber, columnNumber],
+    });
+  }
+
+  handleMouseOver(rowNumber, columnNumber) {
+    if (this.state.isDragging) {
+      const startCell = this.state.startCell;
+      const endCell = [rowNumber, columnNumber];
+
+      const updatedTable = this.state.table.map((rows, rowIndex) => {
+        return rows.map((cellColor, columnIndex) => {
+          if (
+            rowIndex >= Math.min(startCell[0], endCell[0]) &&
+            rowIndex <= Math.max(startCell[0], endCell[0]) &&
+            columnIndex >= Math.min(startCell[1], endCell[1]) &&
+            columnIndex <= Math.max(startCell[1], endCell[1])
+          ) {
+            return this.state.cellColor;
+          } else {
+            return cellColor;
+          }
+        });
+      });
+
+      this.setState({
+        table: updatedTable,
+      });
+    }
+  }
+
+  handleMouseUp() {
+    this.setState({
+      isDragging: false,
+      startCell: null,
+    });
+  }
+
   render() {
     return (
-      <div className="button-container">
-        <button id="addrow" onClick={this.addRow}>
-          Add Row
-        </button>
-        <button id="addColumn" onClick={this.addColumn}>
-          Add Column
-        </button>
-        <select
-          id="dropdown"
-          onChange={this.selectColor}
-          value={this.state.cellColor}
-        >
-          <option value="transparent">Default</option>
-          <option value="red">Red</option>
-          <option value="blue">Blue</option>
-          <option value="green">Green</option>
-          <option value="yellow">Yellow</option>
-        </select>
-        <button onClick={this.colorUncolorCells}>Color Uncolored Cells</button>
-        <button onClick={this.colorAllCells}>Color All Cells</button>
-        <button onClick={this.clearAllCells}>Clear All Cells</button>
-        <button onClick={this.removeRow}>Remove Row</button>
-        <button onClick={this.removeColumn}>Remove Column</button>
-        <Table table={this.state.table} cellClick={this.cellClick} />
+      <div className="main-container">
+        <div className="button-container">
+          <button id="addrow" onClick={this.addRow}>
+            Add Row
+          </button>
+          <button id="addColumn" onClick={this.addColumn}>
+            Add Column
+          </button>
+          <select
+            id="dropdown"
+            onChange={this.selectColor}
+            value={this.state.cellColor}
+          >
+            <option value="transparent">Default</option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="yellow">Yellow</option>
+          </select>
+          <button onClick={this.colorUncolorCells}>
+            Color Uncolored Cells
+          </button>
+          <button onClick={this.colorAllCells}>Color All Cells</button>
+          <button onClick={this.clearAllCells}>Clear All Cells</button>
+          <button onClick={this.removeRow}>Remove Row</button>
+          <button onClick={this.removeColumn}>Remove Column</button>
+        </div>
+
+        <Table
+          table={this.state.table}
+          cellClick={this.cellClick}
+          onMouseDown={this.handleMouseDown}
+          onMouseOver={this.handleMouseOver}
+          onMouseUp={this.handleMouseUp}
+        />
       </div>
     );
   }

@@ -3,15 +3,21 @@ import TableRow from "./TableRow";
 
 class Table extends Component {
   render() {
+    const { table, cellClick, onMouseDown, onMouseOver, onMouseUp } =
+      this.props;
+
     return (
-      <table>
+      <table id="table">
         <tbody>
-          {this.props.table.map((rows, rowNumber) => (
+          {table.map((rows, rowNumber) => (
             <TableRow
               key={rowNumber}
               rows={rows}
               rowNumber={rowNumber}
-              cellClick={this.props.cellClick}
+              cellClick={cellClick}
+              onMouseDown={onMouseDown}
+              onMouseOver={onMouseOver}
+              onMouseUp={onMouseUp}
             />
           ))}
         </tbody>
@@ -19,4 +25,5 @@ class Table extends Component {
     );
   }
 }
+
 export default Table;
