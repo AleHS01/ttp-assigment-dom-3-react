@@ -6,7 +6,7 @@ class AppComponent extends Component {
     super(props);
     this.state = {
       table: [[""]],
-      cellColor: "transparent",
+      cellColor: "white",
       isDragging: false,
       startCell: null,
     };
@@ -79,7 +79,7 @@ class AppComponent extends Component {
 
     const updatedTable = table.map((row) =>
       row.map((cell) => {
-        if (cell === "" || cell === "transparent") return color;
+        if (cell === "" || cell === "white") return color;
         return cell;
       })
     );
@@ -105,10 +105,10 @@ class AppComponent extends Component {
 
   clearAllCells() {
     const table = this.state.table;
-    const color = "transparent";
+    const color = "white";
     const updatedTable = table.map((row) =>
       row.map((cell) => {
-        if (cell !== "transparent") return color;
+        if (cell !== "white") return color;
         return cell;
       })
     );
@@ -195,12 +195,18 @@ class AppComponent extends Component {
           <button id="addColumn" onClick={this.addColumn}>
             Add Column
           </button>
+          <button onClick={this.removeRow}>Remove Row</button>
+          <button onClick={this.removeColumn}>Remove Column</button>
+          <div
+            className="color-preview"
+            style={{ backgroundColor: this.state.cellColor }}
+          ></div>
           <select
             id="dropdown"
             onChange={this.selectColor}
             value={this.state.cellColor}
           >
-            <option value="transparent">Default</option>
+            <option value="white">Default</option>
             <option value="red">Red</option>
             <option value="blue">Blue</option>
             <option value="green">Green</option>
@@ -211,8 +217,6 @@ class AppComponent extends Component {
           </button>
           <button onClick={this.colorAllCells}>Color All Cells</button>
           <button onClick={this.clearAllCells}>Clear All Cells</button>
-          <button onClick={this.removeRow}>Remove Row</button>
-          <button onClick={this.removeColumn}>Remove Column</button>
         </div>
 
         <Table
