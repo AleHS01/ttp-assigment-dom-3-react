@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/ttp-assigment-dom-3-react/dom-with-react-app/static/css/main.b7037a11.css",
-    "main.js": "/ttp-assigment-dom-3-react/dom-with-react-app/static/js/main.49defca8.js",
-    "static/js/787.6e55cfe5.chunk.js": "/ttp-assigment-dom-3-react/dom-with-react-app/static/js/787.6e55cfe5.chunk.js",
-    "index.html": "/ttp-assigment-dom-3-react/dom-with-react-app/index.html",
-    "main.b7037a11.css.map": "/ttp-assigment-dom-3-react/dom-with-react-app/static/css/main.b7037a11.css.map",
-    "main.49defca8.js.map": "/ttp-assigment-dom-3-react/dom-with-react-app/static/js/main.49defca8.js.map",
-    "787.6e55cfe5.chunk.js.map": "/ttp-assigment-dom-3-react/dom-with-react-app/static/js/787.6e55cfe5.chunk.js.map"
+    "main.css": "/ttp-assigment-dom-3-react/dom-with-react-app/public/static/css/main.b7037a11.css",
+    "main.js": "/ttp-assigment-dom-3-react/dom-with-react-app/public/static/js/main.02d79cb1.js",
+    "static/js/787.6e55cfe5.chunk.js": "/ttp-assigment-dom-3-react/dom-with-react-app/public/static/js/787.6e55cfe5.chunk.js",
+    "index.html": "/ttp-assigment-dom-3-react/dom-with-react-app/public/index.html",
+    "main.b7037a11.css.map": "/ttp-assigment-dom-3-react/dom-with-react-app/public/static/css/main.b7037a11.css.map",
+    "main.02d79cb1.js.map": "/ttp-assigment-dom-3-react/dom-with-react-app/public/static/js/main.02d79cb1.js.map",
+    "787.6e55cfe5.chunk.js.map": "/ttp-assigment-dom-3-react/dom-with-react-app/public/static/js/787.6e55cfe5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b7037a11.css",
-    "static/js/main.49defca8.js"
+    "static/js/main.02d79cb1.js"
   ]
 }
